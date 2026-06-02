@@ -6,8 +6,9 @@
 
 - AutoCAD AutoLISP 插件源码
 - 393 个化工工艺流程图常用 DWG 图例符号
-- 一键安装到 D 盘短路径的脚本
+- 一键安装到短路径的脚本
 - 图例索引文件 `symbol-index.csv`
+- 图例目录文件 `SYMBOL-CATALOG.zh-CN.md`
 
 项目主要面向中文化工、工艺、管道、设备、仪表、自控、工程制图相关用户。搜索词也建议使用中文，例如 `球阀`、`保温法兰`、`泵`、`流量计`、`压力表`。
 
@@ -27,9 +28,9 @@
 
 - AutoCAD 2026
 - Windows
-- 插件运行路径建议使用：`D:\ChemSymbolSearch`
+- 插件运行路径建议使用短路径，例如 `D:\ChemSymbolSearch`、`C:\ChemSymbolSearch` 或 `E:\ChemSymbolSearch`
 
-如果你的 AutoCAD 或 Windows 装在 C 盘也可以使用，但建议仍然把本插件安装到 D 盘短路径。AutoCAD 对很长的中文路径有时会报错，短路径更稳定。
+不要求 AutoCAD 必须安装在 D 盘。AutoCAD 装在 C 盘、D 盘或其他盘都可以使用本插件。真正需要注意的是：插件目录尽量使用短路径，避免很长的中文目录。AutoCAD 对过长路径、复杂中文路径有时不稳定。
 
 ## 安装方法
 
@@ -39,7 +40,7 @@
 2. 下载最新版本的压缩包，例如：
 
 ```text
-ChemSymbolSearch-AutoCAD-v0.1.0.zip
+ChemSymbolSearch-AutoCAD-v0.1.1.zip
 ```
 
 3. 解压到任意目录。
@@ -49,10 +50,26 @@ ChemSymbolSearch-AutoCAD-v0.1.0.zip
 Install.cmd
 ```
 
-5. 安装完成后，插件会被复制到：
+5. 安装程序会提示安装目录。
+
+默认规则：
+
+- 如果电脑有 D 盘，默认安装到 `D:\ChemSymbolSearch`
+- 如果电脑没有 D 盘，默认安装到 `C:\ChemSymbolSearch`
+- 也可以手动输入其他短路径，例如 `E:\ChemSymbolSearch`
+
+建议使用短路径，尽量不要安装到很长的中文目录里。
+
+6. 安装完成后，插件会被复制到你选择的目录。默认情况下是：
 
 ```text
 D:\ChemSymbolSearch
+```
+
+如果你安装到了 C 盘，则对应路径可能是：
+
+```text
+C:\ChemSymbolSearch
 ```
 
 然后按下面的 AutoCAD 加载步骤继续操作。
@@ -87,10 +104,18 @@ D:\ChemSymbolSearch\ChemSymbolSearch.root
 APPLOAD
 ```
 
-5. 在弹出的窗口里加载：
+5. 在弹出的窗口里加载插件文件。
+
+如果安装在 D 盘，加载：
 
 ```text
 D:\ChemSymbolSearch\ChemSymbolSearch.lsp
+```
+
+如果安装在 C 盘，加载：
+
+```text
+C:\ChemSymbolSearch\ChemSymbolSearch.lsp
 ```
 
 6. 加载成功后，在 AutoCAD 命令行输入：
@@ -229,6 +254,18 @@ Insert result number <0 to cancel>:
 ```
 
 如果搜不到，可以试试更短的词。例如搜不到 `保温法兰连接`，可以改搜 `保温` 或 `法兰`。
+
+## 图例目录和编号
+
+仓库里提供了图例目录文件：
+
+```text
+SYMBOL-CATALOG.zh-CN.md
+```
+
+这个文件列出了当前收录的全部 DWG 图例，并给每个图例一个固定的 `目录编号`，方便下载前查看、交流和反馈。
+
+注意：`目录编号` 不是 AutoCAD 插入时输入的编号。AutoCAD 中 `HGSYMFIND` 搜索后显示的 `1/2/3` 是当前搜索结果编号，只对当次搜索有效。插入时请以 AutoCAD 命令行当前显示的搜索结果编号为准。
 
 ## 常见问题
 

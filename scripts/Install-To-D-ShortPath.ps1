@@ -1,7 +1,20 @@
+param(
+    [string]$TargetDir
+)
+
 $ErrorActionPreference = "Stop"
 
 $repoRoot = Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Path)
-$targetDir = "D:\ChemSymbolSearch"
+
+if ([string]::IsNullOrWhiteSpace($TargetDir)) {
+    if (Test-Path "D:\") {
+        $TargetDir = "D:\ChemSymbolSearch"
+    } else {
+        $TargetDir = "C:\ChemSymbolSearch"
+    }
+}
+
+$targetDir = $TargetDir
 $targetLibrary = Join-Path $targetDir "Library"
 
 if (-not (Test-Path $targetDir)) {
@@ -24,6 +37,10 @@ if (Test-Path (Join-Path $repoRoot "symbol-index.csv")) {
     Copy-Item -LiteralPath (Join-Path $repoRoot "symbol-index.csv") -Destination (Join-Path $targetDir "symbol-index.csv") -Force
 }
 
+if (Test-Path (Join-Path $repoRoot "SYMBOL-CATALOG.zh-CN.md")) {
+    Copy-Item -LiteralPath (Join-Path $repoRoot "SYMBOL-CATALOG.zh-CN.md") -Destination (Join-Path $targetDir "SYMBOL-CATALOG.zh-CN.md") -Force
+}
+
 Set-Content -Path (Join-Path $targetDir "ChemSymbolSearch.root") -Value $targetLibrary -Encoding ASCII
 
 Write-Host "Installed ChemSymbolSearch to:"
@@ -33,6 +50,6 @@ Write-Host "DWG library folder:"
 Write-Host "  $targetLibrary"
 Write-Host ""
 Write-Host "In AutoCAD, APPLOAD:"
-Write-Host "  D:\ChemSymbolSearch\ChemSymbolSearch.lsp"
+Write-Host ("  " + (Join-Path $targetDir "ChemSymbolSearch.lsp"))
 Write-Host ""
 Write-Host "Then run HGSYMINFO."

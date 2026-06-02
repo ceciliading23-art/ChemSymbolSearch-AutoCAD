@@ -22,6 +22,7 @@ $items = @(
     "Library",
     "Install.cmd",
     "symbol-index.csv",
+    "SYMBOL-CATALOG.zh-CN.md",
     "README.md",
     "INSTALL.zh-CN.md",
     "LICENSE"
