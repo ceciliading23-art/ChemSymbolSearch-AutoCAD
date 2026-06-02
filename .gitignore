@@ -2,6 +2,7 @@
 *.tmp
 *.log
 *.zip
+dist/
 verify*.txt
 diag*.txt
 rootdiag.txt
