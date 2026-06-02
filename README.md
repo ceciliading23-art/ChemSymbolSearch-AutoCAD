@@ -50,7 +50,19 @@ Command-line mode:
 HGSYMFIND
 ```
 
-Then enter a keyword, select a numbered result, pick the insertion point, enter scale `1`, and rotation `0`.
+Workflow:
+
+1. Enter a keyword, for example `球阀`, `保温法兰`, or `泵`.
+2. AutoCAD prints up to 30 matching results, each with a number.
+3. Enter the result number you want to insert. Enter `0` to cancel.
+4. Pick the insertion point in the drawing.
+5. Enter X scale. Start with `1`.
+6. Enter Y scale. Usually enter the same value, for example `1`.
+7. Enter rotation angle. Press Enter to use `0`.
+
+AutoCAD's command line may only show the last one or two result lines. Press `F2` to open the command history window and see the full numbered result list before choosing a number.
+
+AutoCAD asks for X scale and Y scale separately. For normal insertion, type `1`, then `1`, then press Enter for rotation `0`. If the inserted symbol is too small, undo and try a larger pair such as `10`, `10`, or `100`, `100`.
 
 Dialog mode:
 

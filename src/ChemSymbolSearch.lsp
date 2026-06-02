@@ -329,7 +329,7 @@
 (defun hgsym--insert (path)
   (if (and path (findfile path))
     (progn
-      (prompt (strcat "\nPick insertion point, scale, and rotation. File: " path))
+      (prompt (strcat "\nPick insertion point, X scale, Y scale, and rotation. File: " path))
       (command "_.-INSERT" path pause pause pause)
     )
     (alert (strcat "DWG file not found:\n" path))
