@@ -1,0 +1,8 @@
+*.bak
+*.tmp
+*.log
+*.zip
+verify*.txt
+diag*.txt
+rootdiag.txt
+*.scr.local
