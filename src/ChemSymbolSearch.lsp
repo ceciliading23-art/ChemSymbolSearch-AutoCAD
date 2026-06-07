@@ -40,6 +40,16 @@
   (hgsym--dirname path)
 )
 
+(defun hgsym--library-child (dir / candidate)
+  (if dir
+    (progn
+      (setq candidate (strcat (hgsym--trim-slash (hgsym--slash dir)) "\\Library"))
+      (if (vl-file-directory-p candidate) candidate nil)
+    )
+    nil
+  )
+)
+
 (defun hgsym--load-path ()
   (cond
     ((and (boundp '*load-pathname*) *load-pathname*) *load-pathname*)
@@ -72,7 +82,7 @@
       (setq line (read-line fh))
       (close fh)
       (if (and line (vl-file-directory-p line))
-        (hgsym--trim-slash (hgsym--slash line))
+        (hgsym--prefer-library-root (hgsym--trim-slash (hgsym--slash line)))
         nil
       )
     )
@@ -86,6 +96,11 @@
     root
     (hgsym--read-root-config-file (hgsym--config-file))
   )
+)
+
+(defun hgsym--prefer-library-root (root / library)
+  (setq library (hgsym--library-child root))
+  (if library library root)
 )
 
 (defun hgsym--write-root-config-file (cfg root / fh)
@@ -103,13 +118,19 @@
   (hgsym--write-root-config-file (hgsym--config-file) root)
 )
 
-(defun hgsym--default-root (/ lsp plugin-dir parent)
+(defun hgsym--default-root (/ lsp plugin-dir library parent)
   (cond
     ((hgsym--read-root-config) (hgsym--read-root-config))
     ((setq lsp (hgsym--load-path))
       (setq plugin-dir (hgsym--dirname lsp))
-      (setq parent (hgsym--parent plugin-dir))
-      parent
+      (setq library (hgsym--library-child plugin-dir))
+      (if library
+        library
+        (progn
+          (setq parent (hgsym--parent plugin-dir))
+          parent
+        )
+      )
     )
     (T (getvar "DWGPREFIX"))
   )
@@ -119,6 +140,7 @@
   (if (or (not *hgsym-root*) (not (vl-file-directory-p *hgsym-root*)))
     (setq *hgsym-root* (hgsym--default-root))
   )
+  (setq *hgsym-root* (hgsym--prefer-library-root *hgsym-root*))
   *hgsym-root*
 )
 
@@ -489,11 +511,13 @@
   (princ)
 )
 
-(defun c:HGSYMSETROOT (/ dir)
+(defun c:HGSYMSETROOT (/ dir library)
   (setq dir (getstring T "\nEnter DWG library root folder: "))
   (if (and dir (/= dir "") (vl-file-directory-p dir))
     (progn
       (setq *hgsym-root* (hgsym--trim-slash (hgsym--slash dir)))
+      (setq library (hgsym--library-child *hgsym-root*))
+      (if library (setq *hgsym-root* library))
       (setq *hgsym-index* nil)
       (hgsym--write-root-config *hgsym-root*)
       (prompt (strcat "\nLibrary folder set to: " *hgsym-root*))
