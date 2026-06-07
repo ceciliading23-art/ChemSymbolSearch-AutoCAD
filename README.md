@@ -47,14 +47,48 @@
 ChemSymbolSearch-AutoCAD-v0.1.1.zip
 ```
 
-3. 解压到任意目录。
-4. 双击运行：
+3. 右键 zip 文件，选择“全部解压”或“解压到当前文件夹”。
+
+一定要先解压整个 zip 压缩包。不要在 WinRAR、7-Zip 或 Windows 压缩包预览窗口里直接双击 `Install.cmd`，否则安装脚本可能找不到 `scripts` 文件夹。
+
+4. 进入解压后的文件夹，确认能看到这些内容：
+
+```text
+Install.cmd
+scripts
+src
+Library
+README.md
+```
+
+5. 双击运行：
 
 ```text
 Install.cmd
 ```
 
-5. 安装程序会提示安装目录。
+6. 安装程序会显示默认安装目录，例如：
+
+```text
+Default install folder:
+  D:\ChemSymbolSearch
+
+Install folder, or press Enter for default:
+```
+
+看到这里时，直接按回车即可使用默认目录。不要输入 `install`。
+
+如果想安装到别的短路径，也可以输入：
+
+```text
+C:\ChemSymbolSearch
+```
+
+或：
+
+```text
+E:\ChemSymbolSearch
+```
 
 默认规则：
 
@@ -64,7 +98,7 @@ Install.cmd
 
 建议使用短路径，尽量不要安装到很长的中文目录里。
 
-6. 安装完成后，插件会被复制到你选择的目录。默认情况下是：
+7. 安装完成后，插件会被复制到你选择的目录。默认情况下是：
 
 ```text
 D:\ChemSymbolSearch
@@ -314,6 +348,27 @@ D:\ChemSymbolSearch
 ```
 
 AutoCAD 对过长路径、复杂中文路径有时不稳定，短路径最省心。
+
+### 6. 双击 Install.cmd 后提示 `.ps1` 文件不存在
+
+一般是因为没有先解压整个 zip，而是在压缩包预览窗口里直接运行了 `Install.cmd`。
+
+常见报错类似：
+
+```text
+-File 形式参数的实际参数 ...\scripts\Install-To-D-ShortPath.ps1 不存在
+```
+
+这个报错不是安装目录填错了，而是安装器旁边缺少 `scripts` 文件夹。
+
+解决方法：
+
+1. 右键 zip 文件，选择“全部解压”或“解压到当前文件夹”。
+2. 进入解压后的文件夹。
+3. 确认同一层能看到 `Install.cmd` 和 `scripts` 文件夹。
+4. 再双击里面的 `Install.cmd`。
+
+看到安装目录提示时，直接按回车即可使用默认目录；也可以输入 `C:\ChemSymbolSearch`、`D:\ChemSymbolSearch` 或其他短路径。不要输入 `install`。
 
 ## 目录结构
 
