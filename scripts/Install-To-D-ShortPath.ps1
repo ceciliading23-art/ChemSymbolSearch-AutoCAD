@@ -26,7 +26,13 @@ if (-not (Test-Path $targetLibrary)) {
 }
 
 Copy-Item -LiteralPath (Join-Path $repoRoot "src\ChemSymbolSearch.lsp") -Destination (Join-Path $targetDir "ChemSymbolSearch.lsp") -Force
-Copy-Item -LiteralPath (Join-Path $repoRoot "scripts\LoadPlugin.scr") -Destination (Join-Path $targetDir "LoadPlugin.scr") -Force
+
+$lspPath = (Join-Path $targetDir "ChemSymbolSearch.lsp") -replace "\\", "/"
+$scrLines = @(
+    ("(load ""{0}"")" -f $lspPath),
+    "HGSYMINFO"
+)
+Set-Content -LiteralPath (Join-Path $targetDir "LoadPlugin.scr") -Value $scrLines -Encoding ASCII
 
 $repoLibrary = Join-Path $repoRoot "Library"
 if (Test-Path $repoLibrary) {

@@ -156,7 +156,15 @@ D:\ChemSymbolSearch\ChemSymbolSearch.lsp
 C:\ChemSymbolSearch\ChemSymbolSearch.lsp
 ```
 
-6. 加载成功后，在 AutoCAD 命令行输入：
+注意：APPLOAD 要加载的是 `ChemSymbolSearch.lsp` 这个文件，不是 `Install.cmd`、`LoadPlugin.scr`、zip 压缩包或 DWG 文件。
+
+6. 加载成功时，AutoCAD 命令行应该出现类似提示：
+
+```text
+ChemSymbolSearch loaded. Run HGSYMINFO, HGSYM, or HGSYMFIND.
+```
+
+7. 加载成功后，在 AutoCAD 命令行输入：
 
 ```text
 HGSYMINFO
@@ -167,6 +175,8 @@ HGSYMINFO
 ```text
 Indexed DWG files: 393
 ```
+
+如果输入 `HGSYMINFO` 或 `HGSYMFIND` 后提示“未知命令”，说明插件还没有真正加载成功。请重新运行 `APPLOAD`，并确认选择的是安装目录里的 `ChemSymbolSearch.lsp`。
 
 ## 推荐使用方式
 
@@ -349,6 +359,34 @@ HGSYMSETROOT
 ```text
 D:\ChemSymbolSearch\Library
 ```
+
+### 1.1 输入 HGSYMINFO / HGSYMFIND 后提示“未知命令”
+
+这说明 AutoCAD 当前会话里没有加载到插件命令。
+
+请检查：
+
+1. 是否已经运行 `Install.cmd` 完成安装。
+2. 是否在 AutoCAD 里运行 `APPLOAD`。
+3. APPLOAD 选择的是否是安装目录里的 `ChemSymbolSearch.lsp`，例如：
+
+```text
+D:\ChemSymbolSearch\ChemSymbolSearch.lsp
+```
+
+如果你安装在 C 盘，则应选择：
+
+```text
+C:\ChemSymbolSearch\ChemSymbolSearch.lsp
+```
+
+4. 加载成功后，命令行应出现：
+
+```text
+ChemSymbolSearch loaded. Run HGSYMINFO, HGSYM, or HGSYMFIND.
+```
+
+如果没有看到这句提示，说明没有加载到正确的 `.lsp` 文件，或者加载过程中有报错。请按 `F2` 打开 AutoCAD 命令历史窗口查看报错。
 
 ### 2. 搜索结果看不全
 
