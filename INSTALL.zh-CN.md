@@ -2,7 +2,9 @@
 
 这个压缩包是 ChemSymbolSearch 化工图例符号库 AutoCAD 插件的发行包，适合普通用户直接下载使用。
 
-## 一键安装
+## 最简单使用方法：解压后直接在 AutoCAD 加载
+
+如果只是想马上试用，推荐先按这个方法操作，不需要运行安装脚本。
 
 1. 右键 zip 文件，选择“全部解压”或“解压到当前文件夹”。
 
@@ -18,44 +20,83 @@ Library
 README.md
 ```
 
-3. 双击运行：
+3. 打开 AutoCAD。
+4. 输入命令：
+
+```text
+APPLOAD
+```
+
+5. 在 APPLOAD 窗口里，进入刚才解压出来的文件夹，再进入：
+
+```text
+src
+```
+
+6. 选择并加载这个文件：
+
+```text
+ChemSymbolSearch.lsp
+```
+
+也就是类似这样的路径：
+
+```text
+你解压的位置\ChemSymbolSearch-AutoCAD-v0.1.2\src\ChemSymbolSearch.lsp
+```
+
+7. 加载成功时，AutoCAD 命令行应该出现：
+
+```text
+ChemSymbolSearch loaded. Run HGSYMINFO, HGSYM, or HGSYMFIND.
+```
+
+8. 在 AutoCAD 命令行输入：
+
+```text
+HGSYMINFO
+```
+
+正常应该显示：
+
+```text
+Indexed DWG files: 393
+```
+
+如果显示 `Indexed DWG files: 3`，说明插件扫到了错误目录，通常是扫到了项目顶层，而不是 `Library`。请运行 `HGSYMSETROOT`，输入下面这个路径：
+
+```text
+你解压的位置\ChemSymbolSearch-AutoCAD-v0.1.2\Library
+```
+
+然后运行：
+
+```text
+HGSYMREINDEX
+```
+
+再运行：
+
+```text
+HGSYMINFO
+```
+
+应该就会显示 `393`。
+
+## 可选：安装到短路径
+
+如果你不想每次都从下载目录加载，可以运行安装脚本，把插件复制到短路径，例如 `D:\ChemSymbolSearch` 或 `C:\ChemSymbolSearch`。
+
+1. 进入解压后的文件夹。
+2. 双击运行：
 
 ```text
 Install.cmd
 ```
 
-4. 安装程序会显示默认安装目录，例如：
+3. 安装程序会显示默认安装目录。看到 `Install folder, or press Enter for default:` 时，直接按回车即可使用默认目录。不要输入 `install`。
 
-```text
-Default install folder:
-  D:\ChemSymbolSearch
-
-Install folder, or press Enter for default:
-```
-
-看到这里时，直接按回车即可使用默认目录。不要输入 `install`。
-
-如果想安装到别的短路径，也可以输入：
-
-```text
-C:\ChemSymbolSearch
-```
-
-或：
-
-```text
-E:\ChemSymbolSearch
-```
-
-默认规则：
-
-- 如果电脑有 D 盘，默认安装到 `D:\ChemSymbolSearch`
-- 如果电脑没有 D 盘，默认安装到 `C:\ChemSymbolSearch`
-- 也可以手动输入其他短路径，例如 `E:\ChemSymbolSearch`
-
-建议使用短路径，尽量不要安装到很长的中文目录里。
-
-5. 安装完成后，会生成你选择的安装目录。默认情况下可能是：
+4. 安装完成后，会生成你选择的安装目录。默认情况下可能是：
 
 ```text
 D:\ChemSymbolSearch
@@ -66,16 +107,6 @@ D:\ChemSymbolSearch
 ```text
 C:\ChemSymbolSearch
 ```
-
-主要文件包括：
-
-```text
-D:\ChemSymbolSearch\ChemSymbolSearch.lsp
-D:\ChemSymbolSearch\Library
-D:\ChemSymbolSearch\ChemSymbolSearch.root
-```
-
-如果你选择了 C 盘或其他目录，请把上面的 `D:\ChemSymbolSearch` 换成你的实际安装目录。
 
 ## 常见安装卡点
 
@@ -99,7 +130,7 @@ Install folder, or press Enter for default:
 
 直接按回车即可。一般不需要填任何内容。不要输入 `install`。
 
-## 在 AutoCAD 里加载
+## 安装到短路径后，在 AutoCAD 里加载
 
 1. 打开 AutoCAD。
 2. 输入命令：

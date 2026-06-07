@@ -36,15 +36,15 @@
 
 不要求 AutoCAD 必须安装在 D 盘。AutoCAD 装在 C 盘、D 盘或其他盘都可以使用本插件。真正需要注意的是：插件目录尽量使用短路径，避免很长的中文目录。AutoCAD 对过长路径、复杂中文路径有时不稳定。
 
-## 安装方法
+## 最简单使用方法：解压后直接在 AutoCAD 加载
 
-### 方法一：下载发行包，推荐
+如果只是想马上试用，推荐先按这个方法操作，不需要运行安装脚本。
 
 1. 打开本项目 GitHub 页面右侧的 `Releases`。
 2. 下载最新版本的压缩包，例如：
 
 ```text
-ChemSymbolSearch-AutoCAD-v0.1.1.zip
+ChemSymbolSearch-AutoCAD-v0.1.2.zip
 ```
 
 3. 右键 zip 文件，选择“全部解压”或“解压到当前文件夹”。
@@ -61,13 +61,80 @@ Library
 README.md
 ```
 
-5. 双击运行：
+5. 打开 AutoCAD，输入命令：
+
+```text
+APPLOAD
+```
+
+6. 在 APPLOAD 窗口里，进入刚才解压出来的文件夹，再进入：
+
+```text
+src
+```
+
+7. 选择并加载这个文件：
+
+```text
+ChemSymbolSearch.lsp
+```
+
+也就是类似这样的路径：
+
+```text
+你解压的位置\ChemSymbolSearch-AutoCAD-v0.1.2\src\ChemSymbolSearch.lsp
+```
+
+8. 加载成功时，AutoCAD 命令行应该出现：
+
+```text
+ChemSymbolSearch loaded. Run HGSYMINFO, HGSYM, or HGSYMFIND.
+```
+
+9. 在 AutoCAD 命令行输入：
+
+```text
+HGSYMINFO
+```
+
+正常应该显示：
+
+```text
+Indexed DWG files: 393
+```
+
+如果显示 `Indexed DWG files: 3`，说明插件扫到了错误目录，通常是扫到了项目顶层，而不是 `Library`。请运行 `HGSYMSETROOT`，输入下面这个路径：
+
+```text
+你解压的位置\ChemSymbolSearch-AutoCAD-v0.1.2\Library
+```
+
+然后运行：
+
+```text
+HGSYMREINDEX
+```
+
+再运行：
+
+```text
+HGSYMINFO
+```
+
+应该就会显示 `393`。
+
+## 可选：安装到短路径
+
+如果你不想每次都从下载目录加载，可以运行安装脚本，把插件复制到短路径，例如 `D:\ChemSymbolSearch` 或 `C:\ChemSymbolSearch`。
+
+1. 进入解压后的文件夹。
+2. 双击运行：
 
 ```text
 Install.cmd
 ```
 
-6. 安装程序会显示默认安装目录，例如：
+3. 安装程序会显示默认安装目录，例如：
 
 ```text
 Default install folder:
@@ -90,59 +157,7 @@ C:\ChemSymbolSearch
 E:\ChemSymbolSearch
 ```
 
-默认规则：
-
-- 如果电脑有 D 盘，默认安装到 `D:\ChemSymbolSearch`
-- 如果电脑没有 D 盘，默认安装到 `C:\ChemSymbolSearch`
-- 也可以手动输入其他短路径，例如 `E:\ChemSymbolSearch`
-
-建议使用短路径，尽量不要安装到很长的中文目录里。
-
-7. 安装完成后，插件会被复制到你选择的目录。默认情况下是：
-
-```text
-D:\ChemSymbolSearch
-```
-
-如果你安装到了 C 盘，则对应路径可能是：
-
-```text
-C:\ChemSymbolSearch
-```
-
-然后按下面的 AutoCAD 加载步骤继续操作。
-
-### 方法二：下载源码或克隆仓库
-
-1. 下载或克隆本仓库。
-
-2. 在 PowerShell 里进入本项目目录，运行：
-
-```powershell
-.\scripts\Install-To-D-ShortPath.ps1
-```
-
-3. 安装后会生成这个目录：
-
-```text
-D:\ChemSymbolSearch
-```
-
-其中主要文件是：
-
-```text
-D:\ChemSymbolSearch\ChemSymbolSearch.lsp
-D:\ChemSymbolSearch\Library
-D:\ChemSymbolSearch\ChemSymbolSearch.root
-```
-
-4. 打开 AutoCAD，输入命令：
-
-```text
-APPLOAD
-```
-
-5. 在弹出的窗口里加载插件文件。
+4. 安装完成后，AutoCAD 里运行 `APPLOAD`，加载安装目录里的：
 
 如果安装在 D 盘，加载：
 
@@ -158,13 +173,13 @@ C:\ChemSymbolSearch\ChemSymbolSearch.lsp
 
 注意：APPLOAD 要加载的是 `ChemSymbolSearch.lsp` 这个文件，不是 `Install.cmd`、`LoadPlugin.scr`、zip 压缩包或 DWG 文件。
 
-6. 加载成功时，AutoCAD 命令行应该出现类似提示：
+5. 加载成功时，AutoCAD 命令行应该出现类似提示：
 
 ```text
 ChemSymbolSearch loaded. Run HGSYMINFO, HGSYM, or HGSYMFIND.
 ```
 
-7. 加载成功后，在 AutoCAD 命令行输入：
+6. 加载成功后，在 AutoCAD 命令行输入：
 
 ```text
 HGSYMINFO
